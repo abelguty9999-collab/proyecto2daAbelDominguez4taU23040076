@@ -16,7 +16,8 @@ COPY . .
 
 RUN composer install --no-interaction --optimize-autoloader
 
-RUN a2enmod rewrite
+RUN a2dismod mpm_event mpm_worker || true
+RUN a2enmod mpm_prefork rewrite
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/webroot
 
