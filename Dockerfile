@@ -4,7 +4,9 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     unzip \
     git \
-    && docker-php-ext-install intl pdo_mysql
+    && docker-php-ext-install intl pdo_mysql \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -18,7 +20,8 @@ RUN a2enmod rewrite
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/webroot
 
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}/!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+RUN sed -ri 's#/var/www/html#${APACHE_DOCUMENT_ROOT}#g' /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
+
+CMD ["apache2-foreground"]
