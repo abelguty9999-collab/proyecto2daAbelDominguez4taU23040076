@@ -23,17 +23,18 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class Application extends BaseApplication implements AuthenticationServiceProviderInterface
 {
-    public function bootstrap(): void
-    {
-        parent::bootstrap();
+    
 
-        if (PHP_SAPI !== 'cli') {
-            FactoryLocator::add(
-                'Table',
-                (new TableLocator())->allowFallbackClass(false)
-            );
-        }
+public function bootstrap(): void
+{
+    parent::bootstrap();
+
+    if (Configure::read('debug')) {
+    if (!$this->getPlugins()->has('Bake')) {
+        $this->addPlugin('Bake');
     }
+}
+}
 
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {

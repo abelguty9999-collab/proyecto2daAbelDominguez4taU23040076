@@ -17,14 +17,14 @@ class ArticlesController extends AppController
     }
 
     public function view($slug = null)
-    {
-        $article = $this->Articles
-            ->findBySlug($slug)
-            ->contain(['Users'])
-            ->firstOrFail();
+{
+    $article = $this->Articles
+        ->findBySlug($slug)
+        ->contain(['Users', 'Tags'])
+        ->firstOrFail();
 
-        $this->set(compact('article'));
-    }
+    $this->set(compact('article'));
+}
 
     public function add()
 {
@@ -57,12 +57,15 @@ class ArticlesController extends AppController
     }
 
     $this->set(compact('article'));
+    $tags = $this->Articles->Tags->find('list')->all();
+    $this->set(compact('article', 'tags'));
 }
 
     public function edit($slug)
     {
         $article = $this->Articles
             ->findBySlug($slug)
+            ->contain(['Tags'])
             ->firstOrFail();
 
         if ($this->request->is(['post', 'put', 'patch'])) {
@@ -85,6 +88,8 @@ class ArticlesController extends AppController
         }
 
         $this->set(compact('article'));
+        $tags = $this->Articles->Tags->find('list')->all();
+        $this->set(compact('article', 'tags'));
     }
 
     public function delete($slug)

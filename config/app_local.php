@@ -1,6 +1,6 @@
 <?php
 return [
-    'debug' => false,
+    'debug' => true,
 
     'Security' => [
         'salt' => env('SECURITY_SALT', '3f108e2624287a28f5e5c802b8f237abd41a7b7b0262453e2896e6ab9a18b023'),
@@ -12,9 +12,9 @@ return [
             'port' => env('MYSQLPORT', '3306'),
 
             'username' => env('MYSQLUSER', 'root'),
-            'password' => env('MYSQL_ROOT_PASSWORD', ''),
+            'password' => env('MYSQLPASSWORD', ''),
 
-            'database' => env('MYSQLDATABASE', 'railway'),
+            'database' => env('MYSQLDATABASE', 'proyecto2daabeldominguez4tau23040076'),
 
             'url' => null,
         ],

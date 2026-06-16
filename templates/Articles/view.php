@@ -6,6 +6,12 @@
         ['action' => 'edit', $article->slug]
     ) ?>
 </p>
+<p>
+    <strong>Etiquetas:</strong>
+    <?php foreach ($article->tags as $tag): ?>
+        <?= h($tag->title) ?>
+    <?php endforeach; ?>
+</p>
 
 <p>
     <?= $this->Form->postLink(

@@ -18,9 +18,17 @@ class ArticlesTable extends Table
         $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
 
+
         $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-        ]);
+    'foreignKey' => 'user_id',
+    'joinType' => 'LEFT',
+]);
+
+        $this->belongsToMany('Tags', [
+    'foreignKey' => 'article_id',
+    'targetForeignKey' => 'tag_id',
+    'joinTable' => 'articles_tags',
+]);
     }
 
     public function validationDefault(Validator $validator): Validator
